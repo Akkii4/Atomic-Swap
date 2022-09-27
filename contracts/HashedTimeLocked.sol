@@ -43,3 +43,9 @@ contract HashedTimeLocked {
         token.transfer(sender, tokenAmount);
     }
 }
+
+// NOTE: to avoid major bug
+//keep in mind the HTLC contract deployed on blockchain
+// where the secret's owner will be token recipient
+// lock time should be less than that of the HTLC for the user who waits for the secret's owner to withdraw first to get secret
+// as it will avoid Secret's owner to withdraw recieving token right before withdrawal time & also get hold of his original token
