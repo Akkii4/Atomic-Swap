@@ -32,14 +32,17 @@ contract HashedTimeLocked {
     function withdraw(string memory _secret) external {
         require(
             keccak256(abi.encodePacked(_secret)) == secretHash,
-            "wrong secret"
+            "Invalid Secret"
         );
         secret = _secret;
         token.transfer(recipient, tokenAmount);
     }
 
     function refund() external {
-        require(block.timestamp > startTime + lockTime, "too early");
+        require(
+            block.timestamp > startTime + lockTime,
+            "Can't withdraw before locktime"
+        );
         token.transfer(sender, tokenAmount);
     }
 }
